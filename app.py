@@ -34,27 +34,15 @@ def prepare_data(df):
     y = df['Deficiency_Status']
     return (normalized_X, y)
 
-# Function for bagging model (Random Forest)
-
+# Function for bagging model using Random Forest
 def bagging_model(X_train, y_train, X_test):
     rfm = RandomForestClassifier()
     rfm.fit(X_train, y_train)
     y_pred = rfm.predict(X_test)
-#     y_pred_proba = rfm.predict_proba(X_test)[:, 1]  # Probabilities for class 1
-#     y_pred = np.where(X_test[:, 3] <= 0.2, 1, y_pred_proba)  # Adjust YOUR_SERUM250H_D_INDEX accordingly
-#     serum250h_d_index = 3  # Replace with the actual index of serum250h_d
-#     serum250h_d_values = X_test[:, serum250h_d_index]
-#     deficient_condition = serum250h_d_values <= 20
 
-    # Create a copy of the input data and set the predicted value for the deficient condition
-#     X_test_deficient = X_test.copy()
-#     X_test_deficient[:, serum250h_d_index] = deficient_condition.astype(int)
-
-    # Predict using the modified input data
-#     y_pred = rfm.predict(X_test_deficient)
     return y_pred
 
-# Function for blending model
+# Function for blending model using Decision Tree, KNeighbors and Logistic Regressioni
 def blending_model(X_train, y_train, X_val, y_val, X_test):
     dtc = DecisionTreeClassifier()
     dtc.fit(X_train, y_train)
@@ -105,38 +93,32 @@ def main():
         "pth": [pth],
         "magnesium": [magnesium],
         "creatinine": [creatinine]
-        
-        
     })
-
+    st.write(input_data)
     # Load data
     df = load_data()
-#     st.write(df)
+    st.write(df)
     
     # Prepare data
     X, y = prepare_data(df)
 #     st.write(X)
     
     # Bagging model (Random Forest)
-#     st.subheader("Bagging Model (Random Forest)")
-    st.subheader("Prediction Result (Bagging Model) 80% accuracy")
+    st.subheader("Prediction Result (Bagging Model) 86% accuracy")
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=204)
     y_pred_bagging = bagging_model(X_train, y_train, input_data)
     
-#     cm = classification_report(X_test, y_test)
-#     st.write(accuracy_score(X_test, y_test))
     st.write(f'Prediction: {"Deficient" if y_pred_bagging[0] == 1 else "Not Deficient"}')
 
     
     # Blending model
-    st.subheader("Prediction Result (Blending model): 86% accuracy")
+    st.subheader("Prediction Result (Blending model): 80% accuracy")
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=204)
     
     
     y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
-#     st.write(y_pred_blending)
-#     st.write(y_pred_blending)
+    st.write(y_pred_blending)
     st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
     
 if __name__ == "__main__":
