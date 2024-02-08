@@ -119,7 +119,7 @@ def main():
     
     # Bagging model (Random Forest)
 #     st.subheader("Bagging Model (Random Forest)")
-    st.subheader("Prediction Result (Bagging Model) 86% accuracy")
+    st.subheader("Prediction Result (Bagging Model) 80% accuracy")
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=204)
     y_pred_bagging = bagging_model(X_train, y_train, input_data)
@@ -129,15 +129,15 @@ def main():
     st.write(f'Prediction: {"Deficient" if y_pred_bagging[0] == 1 else "Not Deficient"}')
 
     
-    
     # Blending model
-    st.subheader("Prediction Result (Blending model): 80% accuracy")
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.3, random_state=204)
+    st.subheader("Prediction Result (Blending model): 86% accuracy")
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=204)
     
     
     y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
 #     st.write(y_pred_blending)
-    st.write(f'Prediction: {"Deficient" if y_pred_blending[0] >= 0.5 else "Not Deficient"}')
+#     st.write(y_pred_blending)
+    st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
     
 if __name__ == "__main__":
     main()
