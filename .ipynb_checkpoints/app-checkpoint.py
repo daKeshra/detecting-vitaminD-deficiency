@@ -111,7 +111,7 @@ def main():
 
     # Load data
     df = load_data()
-    st.write(df)
+#     st.write(df)
     
     # Prepare data
     X, y = prepare_data(df)
