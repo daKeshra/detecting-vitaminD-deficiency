@@ -39,7 +39,6 @@ def bagging_model(X_train, y_train, X_test):
     rfm = RandomForestClassifier()
     rfm.fit(X_train, y_train)
     y_pred = rfm.predict(X_test)
-
     return y_pred
 
 # Function for blending model using Decision Tree, KNeighbors and Logistic Regressioni
@@ -67,7 +66,7 @@ def main():
     st.title("Vitamin D Deficiency Prediction App")
 
     # Input variables
-    gender = st.sidebar.selectbox("Gender",("Male", "Female"))
+    gender = st.sidebar.selectbox("Gender", ("Male", "Female"))
 #     liver_function = st.sidebar.selectbox("Liver Function",("Normal", "Abnormal"))
     age = st.sidebar.number_input("Age", min_value=18, max_value=100, value=45)
     bmi = st.sidebar.number_input("BMI", min_value=10.0, max_value=50.0, value=28.2)
@@ -94,17 +93,18 @@ def main():
         "magnesium": [magnesium],
         "creatinine": [creatinine]
     })
-    st.write(input_data)
+    
+#     st.write(input_data)
     # Load data
     df = load_data()
-    st.write(df)
+#     st.write(df)
     
     # Prepare data
     X, y = prepare_data(df)
 #     st.write(X)
     
     # Bagging model (Random Forest)
-    st.subheader("Prediction Result (Bagging Model) 86% accuracy")
+    st.subheader("Prediction Result")
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=204)
     y_pred_bagging = bagging_model(X_train, y_train, input_data)
@@ -113,13 +113,13 @@ def main():
 
     
     # Blending model
-    st.subheader("Prediction Result (Blending model): 80% accuracy")
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=204)
+#     st.subheader("Prediction Result (Blending model): 80% accuracy")
+#     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=204)
     
     
-    y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
-    st.write(y_pred_blending)
-    st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
+#     y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
+# #     st.write(y_pred_blending)
+#     st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
     
 if __name__ == "__main__":
     main()
