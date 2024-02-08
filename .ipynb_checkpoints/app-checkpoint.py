@@ -16,12 +16,7 @@ def load_data():
 
 # Function for data preparation
 def prepare_data(df):
-#     df.drop(["Patient_ID", "Sun_Exposure", "Dietary_VitaminD_Intake"], axis=1, inplace=True)
-#     le  = LabelEncoder()
-#     obj_type = df.select_dtypes(include='object').columns
-#     df[obj_type] = le.fit_transform(df[obj_type])
-#     df[obj_type[1]] = le.fit_transform(df[obj_type[1]])
-    
+
     df['Gender'] = df.Gender.apply(lambda x: 0 if x == "Male" else 1)
     df['Liver_Function'] = df.Liver_Function.apply(lambda x: 0 if x == "Abnormal" else 1)
     
