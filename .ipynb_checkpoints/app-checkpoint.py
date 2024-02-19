@@ -23,7 +23,9 @@ def prepare_data(df):
 #     num_type = df.select_dtypes(exclude=['object']).columns.drop(["Phosphorus","Magnesium", "Alkaline_Phosphatase"])
     scaler = MinMaxScaler(feature_range=(0, 1))
 #     df[num_type]  = scaler.fit_transform(df[num_type])
-    X = df.drop( ['Deficiency_Status', "Phosphorus",'Liver_Function'], axis=1)
+    X = df.drop( ['Deficiency_Status'], axis=1)
+#     X = df.drop( ['Deficiency_Status', "Phosphorus",'Liver_Function'], axis=1)
+    
     normalized_X = scaler.fit_transform(X)
     
     y = df['Deficiency_Status']
@@ -58,19 +60,19 @@ def blending_model(X_train, y_train, X_val, y_val, X_test):
 
 # Streamlit app
 def main():
-    st.title("Vitamin D Deficiency Prediction App")
+    st.title("Vitamin D Deficiency Detection App")
 
     # Input variables
     gender = st.sidebar.selectbox("Gender", ("Male", "Female"))
-#     liver_function = st.sidebar.selectbox("Liver Function",("Normal", "Abnormal"))
+    liver_function = st.sidebar.selectbox("Liver Function",("Normal", "Abnormal"))
     age = st.sidebar.number_input("Age", min_value=18, max_value=100, value=45)
     bmi = st.sidebar.number_input("BMI", min_value=10.0, max_value=50.0, value=28.2)
     serum_25Oh_d = 	st.sidebar.number_input("Serum", min_value=0, max_value=200, value=35)
     calcium_level = st.sidebar.number_input("Calcium Level", min_value=0.0, max_value=20.0, value=9.0)
-#     phosphorus = st.sidebar.number_input("Phosphorus", min_value=0.0, max_value=20.0, value=3.2)
+    phosphorus = st.sidebar.number_input("Phosphorus", min_value=0.0, max_value=20.0, value=3.2)
     pth = 	st.sidebar.number_input("PTH", min_value=0, max_value=200, value=30)
     alkaline_phosphatase = st.sidebar.number_input("Alkaline Phosphatase", min_value=0, max_value=200, value=75)
-    magnesium = 	st.sidebar.number_input("Magnesium", min_value=0.0, max_value=200.0, value=1.8, step=0.1)
+    magnesium = st.sidebar.number_input("Magnesium", min_value=0.0, max_value=200.0, value=1.8, step=0.1)
     creatinine = st.sidebar.number_input("creatinine", min_value=0.0, max_value=200.0, value=1.0,step=0.1)
     
     
@@ -79,10 +81,10 @@ def main():
         'Age': [age],
         'BMI': [bmi],
         'Calcium_Level': [calcium_level],
-#         'Phosphorus': [phosphorus],
+        'Phosphorus': [phosphorus],
         'Alkaline_Phosphatase': [alkaline_phosphatase],
         'Gender': [0],  # Placeholder, you can add a gender selection widget
-#         'Liver_Function': [1], # Placeholder, you can add a liver function selection widget
+        'Liver_Function': [1], # Placeholder, you can add a liver function selection widget
         "serum_25Oh_d": [serum_25Oh_d],
         "pth": [pth],
         "magnesium": [magnesium],
@@ -99,22 +101,34 @@ def main():
 #     st.write(X)
     
     # Bagging model (Random Forest)
-    st.subheader("Prediction Result")
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=204)
-    y_pred_bagging = bagging_model(X_train, y_train, input_data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.3, random_state=204)
     
-    st.write(f'Prediction: {"Deficient" if y_pred_bagging[0] == 1 else "Not Deficient"}')
+
+    if st.button("Predict ", key="predict_button"):
+        
+        y_pred_bagging = bagging_model(X_train, y_train, input_data)
+        
+        # Accuracy score- Uncomment the lines below to print the accuracy score for the Bagging model.
+#         pred_y = bagging_model(X_train, y_train, X_test)
+#         st.write(f"Accuracy score Bagging Model: {round(accuracy_score(pred_y, y_test)*100,2)}")
+#         st.subheader("Prediction Result:")
+        st.write(f'{"Deficient" if y_pred_bagging[0] == 1 else "Not Deficient"}')
+        
 
     
-    # Blending model
+    #Blending model
 #     st.subheader("Prediction Result (Blending model): 80% accuracy")
 #     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, random_state=204)
     
+#     if st.button("predict2"):
     
-#     y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
+#         y_pred_blending = blending_model(X_train, y_train, X_val, y_val, input_data)
 # #     st.write(y_pred_blending)
-#     st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
+#         y_blend = blending_model(X_train, y_train, X_val, y_val, X_test)
+#         st.write(f"Accuracy score Blending Model: {round(accuracy_score(y_blend, y_val)*100,2)}")
+    
+#         st.write(f'Prediction: {"Deficient" if y_pred_blending[0] == 1 else "Not Deficient"}')
     
 if __name__ == "__main__":
     main()

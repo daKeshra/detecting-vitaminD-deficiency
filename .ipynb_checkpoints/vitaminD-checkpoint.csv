@@ -1,0 +1,21 @@
+ID,Age,Gender,BMI,SkinTone,SunExposure,Supplementation,BloodLevel,Symptoms,Diagnosis
+1,32,Female,24.5,Light,Low,None,12 ng/mL,Muscle aches,None
+2,55,Male,29.2,Dark,Moderate,Daily multivitamin,30 ng/mL,None,None
+3,20,Female,18.7,Pale,High,Weekly,20 ng/mL,None,None
+4,47,Male,35.1,Olive,Low,None,8 ng/mL,Fatigue,Deficient
+5,72,Female,21.8,Tan,Moderate,Monthly,25 ng/mL,None,Insufficient
+6,63,Male,27.6,Fair,High,None,15 ng/mL,Bone pain,Deficient
+7,18,Female,19.5,Light,Low,Seasonal,18 ng/mL,Low mood,Insufficient
+8,38,Male,31.4,Tan,Moderate,None,10 ng/mL,Muscle weakness,Deficient
+9,50,Female,23.1,Pale,High,Daily,32 ng/mL,None,None
+10,65,Male,33.8,Olive,Low,None,9 ng/mL,Frequent illness,Deficient
+11,23,Female,16.9,Light,Low,None,14 ng/mL,Hair loss,Insufficient
+12,42,Male,28.3,Tan,Moderate,Weekly,22 ng/mL,None,None
+13,68,Female,20.7,Pale,High,Daily,35 ng/mL,None,None
+14,58,Male,32.5,Olive,Low,None,8 ng/mL,Fractures,Deficient
+15,16,Female,18.2,Light,Low,Seasonal,16 ng/mL,None,Insufficient
+16,35,Male,29.9,Tan,Moderate,None,12 ng/mL,Fatigue,Deficient
+17,56,Female,22.4,Pale,High,Daily,33 ng/mL,None,None
+18,49,Male,34.2,Olive,Low,None,9 ng/mL,Delayed wound healing,Deficient
+19,70,Female,21.5,Light,High,Daily,38 ng/mL,None,None
+20,61,Male,30.1,Tan,Low,None,11 ng/mL,Bone tenderness,Deficient
