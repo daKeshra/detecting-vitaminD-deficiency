@@ -105,7 +105,7 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.3, random_state=204)
     
 
-    if st.button("Predict ", key="predict_button"):
+    if st.button("Predict "):
         
         y_pred_bagging = bagging_model(X_train, y_train, input_data)
         
